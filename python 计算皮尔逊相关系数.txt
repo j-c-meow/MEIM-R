@@ -1,0 +1,35 @@
+def pearson_correlation(x, y):
+    # 检查输入列表长度是否相等
+    if len(x) != len(y):
+        raise ValueError("Lists x and y must be of the same length.")
+    
+    # 检查输入列表是否包含非数值元素
+    if not all(isinstance(a, (int, float)) for a in x) or not all(isinstance(b, (int, float)) for b in y):
+        raise ValueError("Lists x and y must contain only numbers.")
+    
+    n = len(x)
+    sum_x = sum(x)
+    sum_y = sum(y)
+    sum_xy = sum(x[i] * y[i] for i in range(n))
+    sum_x2 = sum(x[i] ** 2 for i in range(n))
+    sum_y2 = sum(y[i] ** 2 for i in range(n))
+    
+    numerator = n * sum_xy - sum_x * sum_y
+    denominator = ((n * sum_x2 - sum_x ** 2) ** 0.5) * ((n * sum_y2 - sum_y ** 2) ** 0.5)
+    
+    if denominator == 0:
+        raise ValueError("The denominator is zero, which means the variables are constant or one of the lists is empty.")
+    
+    r = numerator / denominator
+    return r
+
+# 示例输入
+x = [1, 2, 3, 4, 5]
+y = [2, 3, 5, 7, 11]
+
+# 计算皮尔逊相关系数
+try:
+    correlation = pearson_correlation(x, y)
+    print("Pearson Correlation Coefficient:", correlation)
+except ValueError as e:
+    print(e)
